@@ -51,4 +51,4 @@ class Command(HostinfoCommand):
 
         return outstr, 0
 
-#EOF
+# EOF

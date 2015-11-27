@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# 
+#
 # Script to generate nagios view links in bulk
 #
 # Written by Dougal Scott <dougal.scott@gmail.com>
@@ -21,15 +21,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, sys
+import os
+import sys
 
-f=os.popen('/app/hostinfo/bin/hostinfo -p monitored monitored.defined')
+f = os.popen('/app/hostinfo/bin/hostinfo -p monitored monitored.defined')
 for line in f:
-    line=line.strip().replace('monitored=','')
-    host,naghost=line.split()
-    print "%s http://%s/nagios.cgi-bin/extinfo.cgi?type=1&host=%s Nagios" % (host,naghost,host)
+    line = line.strip().replace('monitored=', '')
+    host, naghost = line.split()
+    print "%s http://%s/nagios.cgi-bin/extinfo.cgi?type=1&host=%s Nagios" % (host, naghost, host)
 f.close()
 
 sys.exit(0)
 
-#EOF
+# EOF

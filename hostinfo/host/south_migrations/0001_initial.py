@@ -195,7 +195,6 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'host', ['Links'])
 
-
     def backwards(self, orm):
         # Removing unique constraint on 'RestrictedValue', fields ['keyid', 'value']
         db.delete_unique(u'host_restrictedvalue', ['keyid_id', 'value'])
@@ -241,7 +240,6 @@ class Migration(SchemaMigration):
 
         # Deleting model 'Links'
         db.delete_table(u'host_links')
-
 
     models = {
         u'host.allowedkey': {

@@ -49,4 +49,4 @@ class Command(HostinfoCommand):
         rv.save()
         return None, 0
 
-#EOF
+# EOF

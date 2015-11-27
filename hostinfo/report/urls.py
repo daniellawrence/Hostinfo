@@ -24,6 +24,6 @@ urlpatterns = patterns(
     'report.views',
     url(r'^$', index, name='reportIndex'),
     url(r'^(?P<report>\w+)/(?P<args>.*)', doReport, name='report'),
-    )
+)
 
 # EOF

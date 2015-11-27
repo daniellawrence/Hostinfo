@@ -37,4 +37,4 @@ class Command(HostinfoCommand):
         aliases[0].delete()
         return None, 0
 
-#EOF
+# EOF

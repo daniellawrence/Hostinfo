@@ -31,4 +31,4 @@ def local_escape(value):
             value = value.replace('/', '.slash.')
     return value
 
-#EOF
+# EOF

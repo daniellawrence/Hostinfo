@@ -12,6 +12,8 @@ from .models import getMatches, parseQualifiers
 from .models import KeyValue, Host
 
 ################################################################################
+
+
 def getHostinfo(*args, **kwargs):
     """ Return a dictionary of dictionaries for each hostinfo host that matches the
     args/kwargs.
@@ -20,21 +22,21 @@ def getHostinfo(*args, **kwargs):
         getHostinfo('os!=linux')
         { 'hostA': { 'keyA': ['val1', 'val2'], 'keyB': ['val2']}, 'hostB': {...}}
     """
-    args=list(args)
-    ans={}
-    for k,v in kwargs.items():
-        args.append("%s=%s" % (k,v))
-    qualifiers=parseQualifiers(args)
-    matches=getMatches(qualifiers)
+    args = list(args)
+    ans = {}
+    for k, v in kwargs.items():
+        args.append("%s=%s" % (k, v))
+    qualifiers = parseQualifiers(args)
+    matches = getMatches(qualifiers)
     for hostid in matches:
-        host={}
-        hostname=Host.objects.get(id=hostid).hostname
+        host = {}
+        hostname = Host.objects.get(id=hostid).hostname
         for k in KeyValue.objects.filter(hostid=hostid):
-            keyname=k.keyid.key
+            keyname = k.keyid.key
             if keyname not in host:
-                host[keyname]=[]             
+                host[keyname] = []
             host[keyname].append(k.value)
-        ans[hostname]=host
+        ans[hostname] = host
     return ans
 
-#EOF
+# EOF

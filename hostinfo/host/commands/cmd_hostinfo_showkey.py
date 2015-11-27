@@ -57,4 +57,4 @@ class Command(HostinfoCommand):
                 outstr += "%s\t%s\t%s%s\n" % (key.key, key.get_validtype_display(), key.desc, notes)
         return outstr, 0
 
-#EOF
+# EOF

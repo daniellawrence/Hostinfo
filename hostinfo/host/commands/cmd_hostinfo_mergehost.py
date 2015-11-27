@@ -121,4 +121,4 @@ class Command(HostinfoCommand):
                 srckey.delete(readonlychange=True)
         return True
 
-#EOF
+# EOF

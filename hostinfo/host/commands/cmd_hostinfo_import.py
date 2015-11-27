@@ -206,7 +206,7 @@ class Command(HostinfoCommand):
                 hostname=hostname,
                 docpage=hosttree.attrib.get('docpage', None),
                 origin=hosttree.attrib.get('origin', 'unknown - import')
-                )
+            )
             self.verbose("New host %s" % repr(host))
             if not self.namespace.kiddingFlag:
                 host.save()

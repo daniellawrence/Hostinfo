@@ -33,6 +33,7 @@ _akcache = {None: None}
 
 ################################################################################
 class HostinfoException(Exception):
+
     def __init__(self, msg="", retval=1):
         self.msg = msg
         self.retval = retval
@@ -43,7 +44,9 @@ class HostinfoException(Exception):
 
 ################################################################################
 class ReadonlyValueException(HostinfoException):
+
     """ A change has been attempted on a read only value """
+
     def __init__(self, key=None, msg="", retval=2):
         self.key = key
         self.msg = msg
@@ -55,7 +58,9 @@ class ReadonlyValueException(HostinfoException):
 
 ################################################################################
 class RestrictedValueException(HostinfoException):
+
     """ A change has been attempted on a restricted value """
+
     def __init__(self, msg, key=None, retval=3):
         self.msg = msg
         self.key = key
@@ -67,7 +72,9 @@ class RestrictedValueException(HostinfoException):
 
 ################################################################################
 class HostinfoInternalException(HostinfoException):     # pragma: no cover
+
     """ Something screwy has gone on that was unexpected in the code"""
+
     def __init__(self, key=None, msg="", retval=255):
         self.key = key
         self.msg = msg
@@ -242,7 +249,7 @@ class KeyValue(models.Model):
         undo = UndoLog(
             user=user,
             action='hostinfo_addvalue %s %s=%s %s' % (undoflag, self.keyid, self.value, self.hostid)
-            )
+        )
         undo.save()
         super(KeyValue, self).delete()
 
@@ -281,6 +288,7 @@ class UndoLog(models.Model):
 ################################################################################
 ################################################################################
 class RestrictedValue(models.Model):
+
     """ If an AllowedKey is restricted then the value can only be one that appears
     in this table
     """
@@ -333,7 +341,7 @@ def validateDate(datestr):
         '%d/%m/%Y',
         '%d/%m/%y',
         '%Y/%m/%d',
-        ]
+    ]
 
     for fmt in formats:
         try:
@@ -371,7 +379,7 @@ def parseQualifiers(args):
         ('undef', '\.undef|\.undefined|\.unset', {'threeparts': False}),
         ('def', '\.def|\.defined|\.set', {'threeparts': False}),
         ('hostre', '\.hostre', {'threeparts': False, 'validkey': False}),
-        ]
+    ]
 
     qualifiers = []
     for arg in args:
@@ -421,7 +429,7 @@ def oneoff(val):
     """
     import string
     alphabet = string.ascii_lowercase + string.digits
-    s = [(val[:i], val[i:]) for i in range(len(val)+1)]
+    s = [(val[:i], val[i:]) for i in range(len(val) + 1)]
     deletes = [a + b[1:] for a, b in s if b]
     transposes = [a + b[1] + b[0] + b[2:] for a, b in s if len(b) > 1]
     replaces = [a + c + b[1:] for a, b in s for c in alphabet if b]
@@ -510,7 +518,7 @@ def getMatches(qualifiers):
         if mode == 'intersection':
             hostids = hostids & queryset
         elif mode == 'difference':
-            hostids = hostids-queryset
+            hostids = hostids - queryset
 
     return list(hostids)
 
@@ -605,7 +613,7 @@ def getAK(key):
 def addKeytoHost(
         host=None, hostid=None, key=None, keyid=None,
         value='', origin=None, updateFlag=False, readonlyFlag=False, appendFlag=False
-        ):
+):
     retval = 0
     if not keyid:
         keyid = getAK(key)

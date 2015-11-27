@@ -23,7 +23,7 @@ urlpatterns = [
         url(r'kval/(?P<pk>[0-9]+?)/$', KValDetail, name='restkval'),
         url(r'query/(?P<query>\S+?)/$', HostQuery),
         url(r'alias/$', AliasList),
-        ]
+    ]
     ))
 ]
 

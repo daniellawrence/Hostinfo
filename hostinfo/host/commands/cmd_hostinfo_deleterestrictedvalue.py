@@ -44,4 +44,4 @@ class Command(HostinfoCommand):
         rvallist[0].delete()
         return None, 0
 
-#EOF
+# EOF

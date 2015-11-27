@@ -53,4 +53,4 @@ def module_from_path(filepath):
     dot_py_suffix = ('.py', 'U', 1)  # From imp.get_suffixes()[2]
     return imp.load_module(mod_name, open(filepath), filepath, dot_py_suffix)
 
-#EOF
+# EOF

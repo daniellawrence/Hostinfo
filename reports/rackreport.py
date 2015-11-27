@@ -39,7 +39,7 @@ def doRackList(request):
     tmpvalues = [k for k, v in values.items()]
     tmpvalues.sort()
     tmpvalues.append('No_site_known')
-    elapsed = time.time()-starttime
+    elapsed = time.time() - starttime
     d = {
         'keylist': tmpvalues,
         'elapsed': "%0.4f" % elapsed,
@@ -82,7 +82,7 @@ def doRackreport(request, site='', rack=''):
         if hostid in hostdict:
             del hostdict[hostid]
         else:
-        # Remove hostids that aren't in the rack in question, if there is a rack
+            # Remove hostids that aren't in the rack in question, if there is a rack
             if urlrack:
                 rackhosts = KeyValue.objects.filter(keyid__key='rack', value=urlrack).values('hostid')
         rackids = [rh['hostid'] for rh in rackhosts]
@@ -129,7 +129,7 @@ def doRackreport(request, site='', rack=''):
     datalist.append((rack, tmphostlist))
     datalist.sort()
 
-    elapsed = time.time()-starttime
+    elapsed = time.time() - starttime
     d = {
         'site': urlsite,
         'rack': urlrack,
@@ -142,4 +142,4 @@ def doRackreport(request, site='', rack=''):
 
     return render_to_response('rackreport.template', d)
 
-#EOF
+# EOF

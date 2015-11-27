@@ -22,7 +22,7 @@ from .views import index, doHostlist, doHost, doKeylist, handlePost
 from .edits import (
     doHostMerge, doHostMergeChoose, doHostRenameChoose, doHostEditChoose,
     doHostCreateChoose, doHostEdit, doHostCreate, doHostRename
-    )
+)
 
 
 urlpatterns = patterns(
@@ -53,6 +53,6 @@ urlpatterns = patterns(
     (r'^csv/(?P<criturl>.*)/$', 'doCsvreport'),
     url(r'^keylist/(?P<key>\S+)/$', doKeylist, name='keylist'),
     (r'^rvlist/(?P<key>\S+)/$', 'doRestrValList'),
-    )
+)
 
 # EOF

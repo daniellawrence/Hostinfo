@@ -34,4 +34,4 @@ def getnextelem(value):
     else:
         return ''
 
-#EOF
+# EOF

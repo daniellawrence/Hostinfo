@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# 
+#
 # Script to prompt for the details of a new host
 #
 # Written by Dougal Scott <dougal.scott@gmail.com>
@@ -21,26 +21,36 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, sys, getopt
+import os
+import sys
+import getopt
 
-verbFlag=False
-origin=os.getlogin() 
-cmdlist=[]
+verbFlag = False
+origin = os.getlogin()
+cmdlist = []
 
 ################################################################################
+
+
 def verbose(msg):
     if verbFlag:
-    	sys.stderr.write("%s\n" % msg)
+        sys.stderr.write("%s\n" % msg)
 
 ################################################################################
+
+
 def warning(msg):
     sys.stderr.write("Warning: %s\n" % msg)
 
 ################################################################################
+
+
 def usage():
     sys.stderr.write("Usage: %s\n" % sys.argv[0])
 
 ################################################################################
+
+
 def runCmd(cmd):
     cmdlist.append(cmd)
 #    if flags['kidding']:
@@ -52,112 +62,124 @@ def runCmd(cmd):
 #	f.close()
 
 ################################################################################
+
+
 def ask(prompt):
     sys.stdout.write(prompt)
     sys.stdout.flush()
-    ans=sys.stdin.readline().strip()
+    ans = sys.stdin.readline().strip()
     return ans
 
 ################################################################################
+
+
 def getHost(host):
     if not host:
-	host=ask("Hostname? ")
+        host = ask("Hostname? ")
     runCmd("hostinfo_addhost --origin=%s %s" % (origin, host))
     return host
 
 ################################################################################
+
+
 def getGeneric(host, key, question=''):
     if not question:
-    	question="%s? " % key.title()
-    val=ask(question)
+        question = "%s? " % key.title()
+    val = ask(question)
     if val:
-    	runCmd("hostinfo_addvalue --origin=%s %s=%s %s" % (origin, key, val, host))
+        runCmd("hostinfo_addvalue --origin=%s %s=%s %s" % (origin, key, val, host))
     return val
 
 ################################################################################
+
+
 def checkHost(host):
-    f=os.popen("/app/hostinfo/bin/hostinfo %s" % host)
-    x=f.close()
+    f = os.popen("/app/hostinfo/bin/hostinfo %s" % host)
+    x = f.close()
     if x:
-	return False
+        return False
     else:
-    	print "#" * 80
-    	print "# Host %s already exists" % host
-    	return True
+        print "#" * 80
+        print "# Host %s already exists" % host
+        return True
 
 ################################################################################
+
+
 def checkSerial(serial):
-    f=os.popen("/app/hostinfo/bin/hostinfo serial=%s" % serial)
-    output=f.readlines()
-    x=f.close()
+    f = os.popen("/app/hostinfo/bin/hostinfo serial=%s" % serial)
+    output = f.readlines()
+    x = f.close()
     if x:
-    	return False
+        return False
     else:
-    	print "#" * 80
-    	print "# Hosts matched serial %s" % serial
-    	for line in output:
-	    print "# %s " % line.strip()
-    	print "#" * 80
+        print "#" * 80
+        print "# Hosts matched serial %s" % serial
+        for line in output:
+            print "# %s " % line.strip()
+        print "#" * 80
 
 ################################################################################
+
+
 def main(host=''):
-    host=getHost(host)
-    hware=getGeneric(host, "hardware")
+    host = getHost(host)
+    hware = getGeneric(host, "hardware")
     getGeneric(host, "site")
     getGeneric(host, "rack")
-    asset=getGeneric(host, "asset")
-    serial=getGeneric(host, "serial")
+    asset = getGeneric(host, "asset")
+    serial = getGeneric(host, "serial")
 
     if hware.startswith('sun') or hware.startswith('ibm'):
-    	runCmd("hostinfo_addvalue --origin=%s type=server %s" % (origin,host))
-	if host.endswith('p'):
-	    runCmd("hostinfo_addvalue --origin=%s class=prod %s" % (origin,host))
-	elif host.endswith('s'):
-	    runCmd("hostinfo_addvalue --origin=%s class=staging %s" % (origin,host))
-	elif host.endswith('t'):
-	    runCmd("hostinfo_addvalue --origin=%s class=test %s" % (origin,host))
-	elif host.endswith('d'):
-	    runCmd("hostinfo_addvalue --origin=%s class=dev %s" % (origin,host))
-	else:
-	    getGeneric(host, "class")
+        runCmd("hostinfo_addvalue --origin=%s type=server %s" % (origin, host))
+        if host.endswith('p'):
+            runCmd("hostinfo_addvalue --origin=%s class=prod %s" % (origin, host))
+        elif host.endswith('s'):
+            runCmd("hostinfo_addvalue --origin=%s class=staging %s" % (origin, host))
+        elif host.endswith('t'):
+            runCmd("hostinfo_addvalue --origin=%s class=test %s" % (origin, host))
+        elif host.endswith('d'):
+            runCmd("hostinfo_addvalue --origin=%s class=dev %s" % (origin, host))
+        else:
+            getGeneric(host, "class")
     else:
-	getGeneric(host, "type")
-	getGeneric(host, "class")
+        getGeneric(host, "type")
+        getGeneric(host, "class")
 
     checkHost(host)
     checkSerial(serial)
-    #checkAsset(asset)
+    # checkAsset(asset)
 
     for cmd in cmdlist:
-    	print cmd
+        print cmd
 
 ################################################################################
-if __name__=="__main__":
+if __name__ == "__main__":
     global flags
-    flags={'kidding': False}
+    flags = {'kidding': False}
     try:
-    	opts,args=getopt.getopt(sys.argv[1:], "vhk",["origin="])
-    except getopt.GetoptError,err:
-    	sys.stderr.write("Error: %s\n" % str(err))
-    	usage()
-	sys.exit(1)
+        opts, args = getopt.getopt(sys.argv[1:], "vhk", ["origin="])
+    except getopt.GetoptError, err:
+        sys.stderr.write("Error: %s\n" % str(err))
+        usage()
+        sys.exit(1)
 
-    for o,a in opts:
-    	if o=="-v":
-	    verbFlag=True
-    	if o=="-h":
-	    usage()
-	    sys.exit(0)
-    	if o=="--origin":
-	    origin="'%s'" % a
-    	if o=="-k":
-	    flags['kidding']=True
+    for o, a in opts:
+        if o == "-v":
+            verbFlag = True
+        if o == "-h":
+            usage()
+            sys.exit(0)
+        if o == "--origin":
+            origin = "'%s'" % a
+        if o == "-k":
+            flags['kidding'] = True
 
     if args:
-    	host=args[0]
+        host = args[0]
     else:
-    	host=''
+        host = ''
 
     main(host)
 
-#EOF
+# EOF

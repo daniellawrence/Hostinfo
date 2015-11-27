@@ -65,4 +65,4 @@ class Command(HostinfoCommand):
                         raise HostinfoException("Cannot delete a readonly value")
         return None, 0
 
-#EOF
+# EOF

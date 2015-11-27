@@ -87,4 +87,4 @@ class Command(HostinfoCommand):
                 "Unknown type %s - should be one of %s" % (keytype, ",".join(self.type_choices)))
         return vt
 
-#EOF
+# EOF

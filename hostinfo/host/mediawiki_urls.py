@@ -20,7 +20,7 @@
 from django.conf.urls import patterns, url
 from .mediawiki_views import (
     hosttable, hostlist, displayHost, displaySummary, doRestrValList
-    )
+)
 
 urlpatterns = patterns(
     'host.mediawiki_views',
@@ -29,6 +29,6 @@ urlpatterns = patterns(
     url(r'^host/(?P<hostname>\S+)$', displayHost),
     url(r'^host_summary/(?P<hostname>.*)$', displaySummary),
     url(r'^rvlist/(?P<key>\S+)/$', doRestrValList),
-    )
+)
 
 # EOF

@@ -124,7 +124,7 @@ def doHostMergeChoose(request):
             return HttpResponseRedirect('/hostinfo/hostmerge/%s/%s' % (srchost, dsthost))
     else:
         d['form'] = hostMergeForm()
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostmerge.template', d)
 
 
@@ -144,7 +144,7 @@ def doHostMerge(request, srchost, dsthost):
     else:
         d['keys'] = getHostMergeKeyData(getHost(srchost), getHost(dsthost))
         d['merging'] = True
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostmerge.template', d)
 
 
@@ -164,7 +164,7 @@ def doHostRenameChoose(request):
             return HttpResponseRedirect('/hostinfo/hostrename/%s/%s' % (srchost, dsthost))
     else:
         d['form'] = hostRenameForm()
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostrename.template', d)
 
 
@@ -179,7 +179,7 @@ def doHostRename(request, srchost, dsthost):
     srchost.hostname = dsthost
     srchost.save(request.user)
     d['renamed'] = True
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostrename.template', d)
 
 
@@ -199,7 +199,7 @@ def doHostCreateChoose(request):
             return HttpResponseRedirect('/hostinfo/hostcreate/%s' % hostname)
     else:
         d['form'] = hostCreateForm()
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostcreate.template', d)
 
 
@@ -212,7 +212,7 @@ def doHostCreate(request, hostname):
     nh = Host(hostname=hostname)
     nh.save(request.user)
     d['created'] = True
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostcreate.template', d)
 
 
@@ -271,7 +271,7 @@ def doHostEdit(request, hostname):
     d['host'] = hostname
     d['keylist'] = keylist
     d['editing'] = True
-    d['elapsed'] = time.time()-starttime
+    d['elapsed'] = time.time() - starttime
     return render(request, 'host/hostedit.template', d)
 
 

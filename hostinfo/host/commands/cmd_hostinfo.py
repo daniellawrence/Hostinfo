@@ -152,13 +152,13 @@ class Command(HostinfoCommand):
             if hostid not in matches:
                 continue
             hostids.add(hostid)
-            values[value] = values.get(value, 0)+1
+            values[value] = values.get(value, 0) + 1
         nummatch = len(hostids)     # Number of hosts that match
-        numundef = total-len(hostids)
+        numundef = total - len(hostids)
 
         tmpvalues = []
         for k, v in values.items():
-            p = 100.0*v/nummatch
+            p = 100.0 * v / nummatch
             tmpvalues.append((k, v, p))
 
         tmpvalues.sort()

@@ -256,7 +256,7 @@ def HostSerialize(obj, request):
         'keyvalues': keyvals,
         'aliases': aliases,
         'links': links,
-        }
+    }
     return ans
 
 
@@ -341,7 +341,7 @@ def HostAliasSerialize(obj, request):
         'origin': obj.origin,
         'createdate': obj.createdate,
         'modifieddate': obj.modifieddate
-        }
+    }
     return ans
 
 # EOF

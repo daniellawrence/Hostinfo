@@ -50,4 +50,4 @@ class Command(HostinfoCommand):
             return True
         return False
 
-#EOF
+# EOF

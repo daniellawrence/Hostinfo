@@ -42,7 +42,7 @@ class Command(HostinfoCommand):
         now = datetime.datetime.now()
         if not namespace.days:
             namespace.days = [1]
-        then = now-datetime.timedelta(days=namespace.days[0])
+        then = now - datetime.timedelta(days=namespace.days[0])
         if namespace.user:
             user = namespace.user[0]
         else:
@@ -52,4 +52,4 @@ class Command(HostinfoCommand):
             outstr += "%-55s # %s\n" % (undoact.action, undoact.actiondate)
         return outstr, 0
 
-#EOF
+# EOF

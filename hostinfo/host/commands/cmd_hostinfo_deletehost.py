@@ -60,4 +60,4 @@ class Command(HostinfoCommand):
             h.delete()
         return None, 0
 
-#EOF
+# EOF

@@ -20,7 +20,7 @@
 from django.conf.urls import patterns, url
 from .bare_views import (
     displayHost, doKeylist, doHostcmp, doHostList
-    )
+)
 
 urlpatterns = patterns(
     'host.bare_views',
@@ -29,6 +29,6 @@ urlpatterns = patterns(
     url(r'^keylist/(?P<key>\S+)/?$', doKeylist),
     url(r'^hostcmp/(?P<criturl>.*)/(?P<options>opts=.*)?/?$', doHostcmp),
     url(r'^hostcmp/?$', doHostcmp),
-    )
+)
 
 # EOF

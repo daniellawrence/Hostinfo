@@ -43,7 +43,9 @@ from .edits import getHostMergeKeyData
 
 ###############################################################################
 class test_SingleKey(TestCase):
+
     """ Test operations on a single values key """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -124,7 +126,9 @@ class test_SingleKey(TestCase):
 
 ###############################################################################
 class test_ListKey(TestCase):
+
     """ Test operations on a list of values key """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -209,8 +213,10 @@ class test_ListKey(TestCase):
 
 ###############################################################################
 class test_Restricted(TestCase):
+
     """ Test operations on a restricted key
     """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -238,8 +244,10 @@ class test_Restricted(TestCase):
 
 ###############################################################################
 class test_DateKey(TestCase):
+
     """ Test operations on a date based key
     """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -268,10 +276,12 @@ class test_DateKey(TestCase):
 
 ###############################################################################
 class test_DateValidator(TestCase):
+
     """ Test validateDate()
     """
 
     ###########################################################################
+
     def test_formats(self):
         self.assertEquals(validateDate("2012-12-31"), "2012-12-31")
         self.assertEquals(validateDate("31/12/2012"), "2012-12-31")
@@ -287,8 +297,10 @@ class test_DateValidator(TestCase):
 
 ###############################################################################
 class test_HostAlias(TestCase):
+
     """ Test HostAlias class
     """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -309,8 +321,10 @@ class test_HostAlias(TestCase):
 
 ###############################################################################
 class test_Links(TestCase):
+
     """ Test Links
     """
+
     def setUp(self):
         clearAKcache()
         self.host = Host(hostname='host')
@@ -335,6 +349,7 @@ class test_Links(TestCase):
 
 ###############################################################################
 class test_parseQualifiers(TestCase):
+
     def setUp(self):
         clearAKcache()
         self.key = AllowedKey(key='kpq', validtype=1)
@@ -382,7 +397,7 @@ class test_parseQualifiers(TestCase):
         self.assertEquals(
             parseQualifiers(['kpq!=value', 'kpq.def', 'kpq@value']),
             [('unequal', 'kpq', 'value'), ('def', 'kpq', ''), ('approx', 'kpq', 'value')]
-            )
+        )
 
     ###########################################################################
     def test_badkey(self):
@@ -394,6 +409,7 @@ class test_parseQualifiers(TestCase):
 class test_getMatches(TestCase):
     # The use of set's in the test cases is to make sure that the order
     # of the results is not an issue
+
     def setUp(self):
         clearAKcache()
         # hostA: single=100, list==[alpha, beta], date=2012/12/25
@@ -431,31 +447,31 @@ class test_getMatches(TestCase):
         self.assertEquals(
             getMatches([('equal', 'single', '100')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             set(getMatches([('equal', 'list', 'alpha')])),
             set([self.host.id, self.host2.id])
-            )
+        )
         self.assertEquals(
             getMatches([('equal', 'list', 'beta')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('equal', 'list', 'gamma')]),
             []
-            )
+        )
         self.assertEquals(
             getMatches([('equal', 'date', '2012-12-25')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('equal', 'date', '2012/12/25')]),
             []
-            )
+        )
         self.assertEquals(
             getMatches([('equal', 'date', '2012/12/26')]),
             []
-            )
+        )
 
     ###########################################################################
     def test_unequals(self):
@@ -464,27 +480,27 @@ class test_getMatches(TestCase):
         self.assertEquals(
             getMatches([('unequal', 'single', '100')]),
             [self.host2.id]
-            )
+        )
         self.assertEquals(
             getMatches([('unequal', 'list', 'alpha')]),
             []
-            )
+        )
         self.assertEquals(
             getMatches([('unequal', 'list', 'beta')]),
             [self.host2.id]
-            )
+        )
         self.assertEquals(
             set(getMatches([('unequal', 'list', 'gamma')])),
-            set([self.host.id,  self.host2.id])
-            )
+            set([self.host.id, self.host2.id])
+        )
         self.assertEquals(
             getMatches([('unequal', 'date', '2012-12-25')]),
             [self.host2.id]
-            )
+        )
         self.assertEquals(
             set(getMatches([('unequal', 'date', '2012-12-26')])),
             set([self.host.id, self.host2.id])
-            )
+        )
 
     ###########################################################################
     def test_greaterthan(self):
@@ -494,17 +510,17 @@ class test_getMatches(TestCase):
         self.assertEquals(getMatches([('greaterthan', 'single', '101')]), [])
         self.assertEquals(
             set(getMatches([('greaterthan', 'list', 'aaaaa')])),
-            set([self.host.id,  self.host2.id])
-            )
+            set([self.host.id, self.host2.id])
+        )
         self.assertEquals(getMatches([('greaterthan', 'list', 'zzzzz')]), [])
         self.assertEquals(
             getMatches([('greaterthan', 'date', '2012-12-24')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('greaterthan', 'date', '2012-12-26')]),
             []
-            )
+        )
 
     ###########################################################################
     def test_lessthan(self):
@@ -513,27 +529,27 @@ class test_getMatches(TestCase):
         self.assertEquals(
             getMatches([('lessthan', 'single', '99')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('lessthan', 'single', '101')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('lessthan', 'list', 'aaaaa')]),
             []
-            )
+        )
         self.assertEquals(
             set(getMatches([('lessthan', 'list', 'zzzzz')])),
-            set([self.host.id,  self.host2.id])
-            )
+            set([self.host.id, self.host2.id])
+        )
         self.assertEquals(
             getMatches([('lessthan', 'date', '2012-12-24')]),
             []
-            )
+        )
         self.assertEquals(
             getMatches([('lessthan', 'date', '2012-12-26')]),
             [self.host.id]
-            )
+        )
 
     ###########################################################################
     def test_contains(self):
@@ -542,31 +558,31 @@ class test_getMatches(TestCase):
         self.assertEquals(
             getMatches([('contains', 'single', '0')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('contains', 'single', '9')]),
             []
-            )
+        )
         self.assertEquals(
             set(getMatches([('contains', 'list', 'alp')])),
             set([self.host.id, self.host2.id])
-            )
+        )
         self.assertEquals(
             set(getMatches([('contains', 'list', 'alpha')])),
             set([self.host.id, self.host2.id])
-            )
+        )
         self.assertEquals(
             getMatches([('contains', 'list', 'betan')]),
             []
-            )
+        )
         self.assertEquals(
             getMatches([('contains', 'date', '2012')]),
             [self.host.id]
-            )
+        )
         self.assertEquals(
             getMatches([('contains', 'date', '-13-')]),
             []
-            )
+        )
 
     ###########################################################################
     def test_notcontains(self):
@@ -623,6 +639,7 @@ class test_getMatches(TestCase):
 ###############################################################################
 class test_getHost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.h1 = Host(hostname='h1')
@@ -657,6 +674,7 @@ class test_getHost(TestCase):
 ###############################################################################
 class test_getAK(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.ak = AllowedKey(key='ak_checkkey')
@@ -681,6 +699,7 @@ class test_getAK(TestCase):
 ###############################################################################
 class test_checkHost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.h = Host(hostname='test_check_host')
@@ -704,6 +723,7 @@ class test_checkHost(TestCase):
 ###############################################################################
 class test_cmd_hostinfo(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -824,7 +844,7 @@ class test_cmd_hostinfo(TestCase):
         self.assertEquals(
             output,
             ('h1\n    ak1: kv1            \n    ak2: kv3            \nh2\n    ak1: kv2            \n', 0)
-            )
+        )
 
     ###########################################################################
     def test_hostinfo_xml(self):
@@ -905,6 +925,7 @@ class test_cmd_hostinfo(TestCase):
 ###############################################################################
 class test_cmd_addalias(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -975,6 +996,7 @@ class test_cmd_addalias(TestCase):
 ###############################################################################
 class test_cmd_addhost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1029,6 +1051,7 @@ class test_cmd_addhost(TestCase):
 ###############################################################################
 class test_cmd_addkey(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1157,6 +1180,7 @@ class test_cmd_addkey(TestCase):
 ###############################################################################
 class test_cmd_addrestrictedvalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1218,6 +1242,7 @@ class test_cmd_addrestrictedvalue(TestCase):
 ###############################################################################
 class test_cmd_addvalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1338,6 +1363,7 @@ class test_cmd_addvalue(TestCase):
 ###############################################################################
 class test_cmd_deletealias(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1376,6 +1402,7 @@ class test_cmd_deletealias(TestCase):
 ###############################################################################
 class test_cmd_deletehost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1446,6 +1473,7 @@ class test_cmd_deletehost(TestCase):
 ###############################################################################
 class test_cmd_deleterestrictedvalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1512,6 +1540,7 @@ class test_cmd_deleterestrictedvalue(TestCase):
 ###############################################################################
 class test_cmd_deletevalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1598,6 +1627,7 @@ class test_cmd_deletevalue(TestCase):
 ###############################################################################
 class test_cmd_history(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1720,6 +1750,7 @@ class test_cmd_history(TestCase):
 ###############################################################################
 class test_cmd_import(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1739,6 +1770,7 @@ class test_cmd_import(TestCase):
 ###############################################################################
 class test_cmd_listalias(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1802,6 +1834,7 @@ class test_cmd_listalias(TestCase):
 ###############################################################################
 class test_cmd_listrestrictedvalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1838,6 +1871,7 @@ class test_cmd_listrestrictedvalue(TestCase):
 ###############################################################################
 class test_cmd_mergehost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -1903,7 +1937,7 @@ class test_cmd_mergehost(TestCase):
             "Collision: mergesingle src=val1 dst=val2",
             "To keep dst mrghost2 value val2: hostinfo_addvalue --update mergesingle='val2' mrghost1",
             "To keep src mrghost1 value val1: hostinfo_addvalue --update mergesingle='val1' mrghost2"
-            ]
+        ]
         for msg in errmsgs:
             self.assertIn(msg, errout)
         self.assertEquals(output, ("Failed to merge", 1))
@@ -1957,6 +1991,7 @@ class test_cmd_mergehost(TestCase):
 ###############################################################################
 class test_cmd_renamehost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -2002,6 +2037,7 @@ class test_cmd_renamehost(TestCase):
 ###############################################################################
 class test_cmd_replacevalue(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -2090,6 +2126,7 @@ class test_cmd_replacevalue(TestCase):
 ###############################################################################
 class test_cmd_showkey(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -2117,7 +2154,7 @@ class test_cmd_showkey(TestCase):
         self.assertEquals(
             output,
             ('showkey1\tsingle\tdescription\t[KEY RESTRICTED]\nshowkey2\tlist\tanother description\t[KEY READ ONLY]\nshowkey3\tdate\t\n', 0)
-            )
+        )
 
     ###########################################################################
     def test_showtype(self):
@@ -2142,6 +2179,7 @@ class test_cmd_showkey(TestCase):
 ###############################################################################
 class test_cmd_undolog(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         import argparse
@@ -2182,6 +2220,7 @@ class test_cmd_undolog(TestCase):
 ###############################################################################
 class test_run_from_cmdline(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.oldargv = sys.argv
@@ -2210,6 +2249,7 @@ class test_run_from_cmdline(TestCase):
 ###############################################################################
 class test_url_hostmerge(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2240,7 +2280,7 @@ class test_url_hostmerge(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostmerge.template', 'host/base.html']
-            )
+        )
 
     ###########################################################################
     def test_do_merge(self):
@@ -2256,7 +2296,7 @@ class test_url_hostmerge(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostmerge.template', 'host/base.html']
-            )
+        )
         host = Host.objects.filter(hostname='merge1')
         sys.stderr.write("Fix merge test\n")
         return  # TODO
@@ -2270,6 +2310,7 @@ class test_url_hostmerge(TestCase):
 ###############################################################################
 class test_url_hostrename(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2299,7 +2340,7 @@ class test_url_hostrename(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostrename.template', 'host/base.html']
-            )
+        )
         host = Host.objects.filter(hostname='urenamehost1')
         self.assertEquals(len(host), 0)
         host = Host.objects.filter(hostname='urenamed')
@@ -2314,12 +2355,13 @@ class test_url_hostrename(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostrename.template', 'host/base.html']
-            )
+        )
 
 
 ###############################################################################
 class test_url_index(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2335,12 +2377,13 @@ class test_url_index(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/index.template', 'host/base.html']
-            )
+        )
 
 
 ###############################################################################
 class test_url_handlePost(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2366,13 +2409,15 @@ class test_url_handlePost(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/host.template', 'host/showall.template']
-            )
+        )
 
 
 ###############################################################################
 class test_url_keylist(TestCase):
+
     """ Test views doKeylist function"""
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2400,7 +2445,7 @@ class test_url_keylist(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/keylist.template']
-            )
+        )
         self.assertEquals(response.context['key'], 'urlkey')
         self.assertEquals(response.context['total'], 2)          # Number of hosts
         self.assertEquals(response.context['numkeys'], 1)        # Number of different values
@@ -2418,7 +2463,7 @@ class test_url_keylist(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/keylist.template']
-            )
+        )
         self.assertEquals(response.context['key'], 'badkey')
         self.assertEquals(response.context['total'], 2)          # Number of hosts
         self.assertEquals(response.context['numkeys'], 0)        # Number of different values
@@ -2432,6 +2477,7 @@ class test_url_keylist(TestCase):
 ###############################################################################
 class test_hostviewrepr(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.key1 = AllowedKey(key='hvrkey1', validtype=1)
@@ -2461,8 +2507,8 @@ class test_hostviewrepr(TestCase):
         self.assertEquals(ans, [
             (u'hvrkey1', [self.kv1]),
             (u'hvrkey2', [self.kv2])
-            ]
-            )
+        ]
+        )
 
     ###########################################################################
     def test_empty(self):
@@ -2485,13 +2531,14 @@ class test_hostviewrepr(TestCase):
         self.assertEquals(ans, [
             (u'hvrkey2', []),
             (u'hvrkey1', [kv])
-            ])
+        ])
         kv.delete()
 
 
 ###############################################################################
 class test_getHostMergeKeyData(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.host1 = Host(hostname='hmkdhost1')
@@ -2529,17 +2576,19 @@ class test_getHostMergeKeyData(TestCase):
         self.assertEquals(
             sorted(k[1][1]['src']),
             sorted(['alpha', 'beta'])
-            )
+        )
         self.assertEquals(k[1][1]['dst'], [])
 
 
 ###############################################################################
 class test_url_rvlist(TestCase):
+
     """ Test doRestrValList function and /hostinfo/rvlist url
         (r'^rvlist/(?P<key>\S+)/$', 'doRestrValList'),
         (r'^rvlist/(?P<key>\S+)/(?P<mode>\S+)$', 'doRestrValList'),
         """
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2567,7 +2616,7 @@ class test_url_rvlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/restrval.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['key'], 'rvlkey')
         self.assertEquals(len(response.context['rvlist']), 3)
         self.assertTrue(self.rv1 in response.context['rvlist'])
@@ -2590,6 +2639,7 @@ class test_url_rvlist(TestCase):
 class test_url_host_summary(TestCase):
     # (r'^host_summary/(?P<hostname>.*)$', 'doHostSummary'),
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2623,7 +2673,7 @@ class test_url_host_summary(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostpage.template', 'host/base.html']
-            )
+        )
         hostlist = response.context['hostlist'][0]
         self.assertEquals(hostlist['hostname'], 'hosths')
         self.assertEquals(hostlist['links'], ['<a class="foreignlink" href="http://code.google.com/p/hostinfo">hslink</a>'])
@@ -2646,6 +2696,7 @@ class test_url_host_summary(TestCase):
 ###############################################################################
 class test_url_host_edit(TestCase):
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.user = User.objects.create_user('fred', 'fred@example.com', 'secret')
@@ -2689,7 +2740,7 @@ class test_url_host_edit(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostedit.template', 'host/base.html']
-            )
+        )
 
     ###########################################################################
     def test_hostpicked(self):
@@ -2699,13 +2750,13 @@ class test_url_host_edit(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostedit.template', 'host/base.html', 'host/hostediting.template']
-            )
+        )
         self.assertEquals(response.context['host'], 'hosteh')
         self.assertEquals(response.context['editing'], True)
         self.assertEquals(
             response.context['kvlist'],
             [('ehkey1', [self.kv1], 'list', []), (u'ehkey3', [self.kv2], u'single', ['-Unknown-', u'false', u'true'])]
-            )
+        )
         self.assertEquals(response.context['keylist'], [self.key2])
 
     ###########################################################################
@@ -2714,13 +2765,13 @@ class test_url_host_edit(TestCase):
             '/hostinfo/hostedit/hosteh/',
             {'hostname': 'hosteh', '_hostediting': 'hosteh', 'ehkey1.0': 'newval', '_newkey.new': 'ehkey3', '_newvalue.new': 'v2'},
             follow=True
-            )
+        )
         self.assertEquals(response.status_code, 200)
         self.assertTrue('error' not in response.context)
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostedit.template', 'host/base.html', 'host/hostediting.template']
-            )
+        )
         # kv=KeyValue.objects.filter(hostid=self.host, keyid=self.key1)
         # self.assertEquals(kv[0].value, 'newval')
         # kv=KeyValue.objects.filter(hostid=self.host, keyid=self.key3)
@@ -2730,11 +2781,13 @@ class test_url_host_edit(TestCase):
 
 ###############################################################################
 class test_url_hostlist(TestCase):
+
     """
     (r'^hostlist/(?P<criteria>.*)/(?P<options>opts=.*)?$', 'doHostlist'),
     (r'^host/$', 'doHostlist'),
     """
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2772,7 +2825,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['count'], 3)
         self.assertEquals(response.context['hostlist'][0]['hostname'], 'a_hosthl1')
         self.assertEquals(response.context['hostlist'][1]['hostname'], 'm_hosthl')
@@ -2785,7 +2838,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/hostlist.template']
-            )
+        )
         self.assertEquals(response.context['error'].msg, 'Must use an existing key, not badkey')
 
     ###########################################################################
@@ -2796,7 +2849,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/hostlist.template']
-            )
+        )
 
     ###########################################################################
     def test_withoptions(self):
@@ -2808,7 +2861,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             sorted([t.name for t in response.templates]),
             ['host/base.html', 'host/hostlist.template']
-            )
+        )
 
     ###########################################################################
     def test_nohosts(self):
@@ -2818,7 +2871,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['count'], 3)
         self.assertEquals(response.context['hostlist'][0]['hostname'], 'a_hosthl1')
         self.assertEquals(response.context['hostlist'][1]['hostname'], 'm_hosthl')
@@ -2832,7 +2885,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['count'], 1)
         self.assertEquals(response.context['csvavailable'], '/hostinfo/csv/z_hosthl2')
         self.assertEquals(response.context['hostlist'][0]['hostname'], 'z_hosthl2')
@@ -2846,7 +2899,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['title'], 'urlkey.eq.val')
         self.assertEquals(response.context['count'], 1)
         self.assertEquals(response.context['hostlist'][0]['hostname'], 'z_hosthl2')
@@ -2859,7 +2912,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['count'], 3)
         self.assertEquals(response.context['origin'], True)
 
@@ -2871,7 +2924,7 @@ class test_url_hostlist(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['host/hostlist.template', 'host/base.html']
-            )
+        )
         self.assertEquals(response.context['count'], 3)
         self.assertEquals(response.context['origin'], True)
         self.assertEquals(response.context['dates'], True)
@@ -2879,11 +2932,13 @@ class test_url_hostlist(TestCase):
 
 ###############################################################################
 class test_url_csv(TestCase):
+
     """
     (r'^csv/$', 'doCsvreport'),
     (r'^csv/(?P<criteria>.*)/$', 'doCsvreport'),
     """
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2912,15 +2967,17 @@ class test_url_csv(TestCase):
         self.assertEquals(
             response.content,
             b"hostname,csvkey\r\nhostcsv1,\r\nhostcsv2,val\r\n"
-            )
+        )
 
 
 ###############################################################################
 class test_url_hostwikitable(TestCase):
+
     """
     (r'^hostwikitable/(?P<criteria>.*?)(?P<options>/(?:order=|print=).*)?$', 'doHostwikiTable'),
     """
     ###########################################################################
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -2963,9 +3020,11 @@ class test_url_hostwikitable(TestCase):
 
 ###############################################################################
 class test_url_hostcmp(TestCase):
+
     """
     (r'^hostcmp/(?P<criteria>.*)/(?P<options>opts=.*)?$', 'doHostcmp'),
     """
+
     def setUp(self):
         clearAKcache()
         self.client = Client()
@@ -3000,7 +3059,7 @@ class test_url_hostcmp(TestCase):
         self.assertEquals(
             set([t.name for t in response.templates]),
             set(['host/multihost.template', 'host/base.html', 'host/showall.template'])
-            )
+        )
 
     ###########################################################################
     def test_hostcmp_dates(self):
@@ -3015,7 +3074,7 @@ class test_url_hostcmp(TestCase):
         self.assertEquals(
             set([t.name for t in response.templates]),
             set(['host/multihost.template', 'host/base.html', 'host/showall.template'])
-            )
+        )
 
     ###########################################################################
     def test_hostcmp_origin(self):
@@ -3029,11 +3088,12 @@ class test_url_hostcmp(TestCase):
         self.assertEquals(
             set([t.name for t in response.templates]),
             set(['host/multihost.template', 'host/base.html', 'host/showall.template'])
-            )
+        )
 
 
 ###############################################################################
 class test_orderhostlist(TestCase):
+
     def setUp(self):
         clearAKcache()
         self.key1 = AllowedKey(key='ohlkey1')
@@ -3092,6 +3152,7 @@ class test_orderhostlist(TestCase):
 
 ###############################################################################
 class test_restHost(TestCase):
+
     def setUp(self):
         self.client = Client()
         self.host = Host(hostname='hostrh')
@@ -3414,6 +3475,7 @@ class test_restHost(TestCase):
 
 ###############################################################################
 class test_bare(TestCase):
+
     def setUp(self):
         self.client = Client()
         self.host = Host(hostname='hostcn')
@@ -3437,7 +3499,7 @@ class test_bare(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['bare/hostlist.html', 'bare/base.html']
-            )
+        )
 
     ###########################################################################
     def test_hosttable(self):
@@ -3447,7 +3509,7 @@ class test_bare(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['bare/hostlist.html', 'bare/base.html']
-            )
+        )
         self.assertIn('tbval', str(response.content))
 
     ###########################################################################
@@ -3458,7 +3520,7 @@ class test_bare(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['bare/host.html', 'bare/base.html']
-            )
+        )
 
     ###########################################################################
     def test_keylist(self):
@@ -3468,7 +3530,7 @@ class test_bare(TestCase):
         self.assertEquals(
             [t.name for t in response.templates],
             ['bare/keylist.html', 'bare/base.html']
-            )
+        )
 
     ###########################################################################
     def test_hostcmp(self):
@@ -3478,11 +3540,12 @@ class test_bare(TestCase):
         self.assertEquals(
             sorted([str(t.name) for t in response.templates]),
             sorted(['bare/base.html', 'bare/showall.html', 'bare/multihost.html'])
-            )
+        )
 
 
 ###############################################################################
 class test_hostData(TestCase):
+
     def setUp(self):
         clearAKcache()
         self.key1 = AllowedKey(key='hdfkey1', validtype=1)
@@ -3594,6 +3657,7 @@ class test_hostData(TestCase):
 
 ###############################################################################
 class test_version(TestCase):
+
     def setUp(self):
         self.client = Client()
 

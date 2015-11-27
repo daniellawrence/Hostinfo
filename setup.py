@@ -14,7 +14,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup_templates = {
     'hostinfo.host': ['templates/host/*'],
     'hostinfo.report': ['templates/report/*'],
-    }
+}
 
 reports = [('reports', glob('reports/*'))]
 libexec = [('libexec', glob('libexec/*'))]
@@ -28,7 +28,7 @@ setup_classifiers = [
     'License :: OSI Approved :: GNU General Public Licence (GPL)',
     'Operating System :: POSIX',
     'Topic :: System :: Systems Administration',
-    ]
+]
 
 setup(
     name='hostinfo',
@@ -53,6 +53,6 @@ setup(
     package_data=setup_templates,
     data_files=reports + libexec,
     classifiers=setup_classifiers,
-    )
+)
 
-#EOF
+# EOF

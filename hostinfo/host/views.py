@@ -119,12 +119,12 @@ def hostData(user, criteria=[], options='', printers=[], order=None, linker=None
             'hostname': host.hostname,
             'hostview': hostviewrepr(host.hostname, printers=printers),
             'aliases': getAliases(host.hostname)
-            }
+        }
         if linker:
             tmp['links'] = linker(hostid=host.id)
         data.append(tmp)
 
-    elapsed = time.time()-starttime
+    elapsed = time.time() - starttime
 
     d = {
         'hostlist': data,
@@ -137,7 +137,7 @@ def hostData(user, criteria=[], options='', printers=[], order=None, linker=None
         'printers': printers,
         'order': order,
         'options': options,
-        }
+    }
     if options and 'dates' in options:
         d['dates'] = True
     if options and 'origin' in options:
@@ -297,15 +297,15 @@ def calcKeylistVals(key):
 
     tmpvalues.sort()
     total = Host.objects.count()
-    numundef = total-len(hostids)
+    numundef = total - len(hostids)
     d = {
         'key': key,
         'keylist': tmpvalues,
         'numkeys': len(tmpvalues),
         'numdef': len(hostids),
-        'pctdef': 100.0*len(hostids)/total,
+        'pctdef': 100.0 * len(hostids) / total,
         'numundef': numundef,
-        'pctundef': 100.0*numundef/total,
+        'pctundef': 100.0 * numundef / total,
         'total': total,
     }
     return d
